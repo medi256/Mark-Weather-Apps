@@ -1,0 +1,6 @@
+/* Login page specific adjustments */
+.main.signup-container {
+  /* reuse general container from style.css */
+}
+
+/* maybe no need to repeat all styles, just import shared styles */

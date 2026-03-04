@@ -1,0 +1,139 @@
+.navbar {
+  background-color: #1e1e2f;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand a {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 1.5rem;
+  height: 0.125rem;
+  background: #f1f1f1;
+  margin: 0.125rem 0;
+  transition: 0.3s;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-menu li a,
+.nav-menu li span {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-menu li a:hover {
+  color: #00bcd4;
+}
+
+.nav-menu li button {
+  background: #00bcd4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-weight: 600;
+}
+
+.nav-menu li button:hover {
+  background: #0097a7;
+}
+
+.welcome-text {
+  color: #ddd;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@media (max-width: 48rem) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 4rem;
+    right: -100%;
+    width: 100%;
+    height: calc(100vh - 4rem);
+    background: #1e1e2f;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    transition: right 0.3s ease;
+    gap: 1rem;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-menu li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-menu li a,
+  .nav-menu li span {
+    display: block;
+    padding: 1rem;
+    font-size: 1.125rem;
+  }
+
+  .nav-menu li button {
+    width: 80%;
+    max-width: 12rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 64rem) {
+  .nav-menu {
+    gap: 1.5rem;
+  }
+
+  .nav-menu li a,
+  .nav-menu li span {
+    font-size: 0.9375rem;
+  }
+}

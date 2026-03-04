@@ -1,0 +1,76 @@
+:root {
+  --primary-color: #ced8ff;
+  --secondary-color: #00bcd4;
+  --text-color: #333;
+  --font-main: sans-serif;
+  --error-color: #d32f2f;
+  --success-color: #388e3c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-main);
+}
+
+body {
+  background: var(--primary-color);
+  color: var(--text-color);
+}
+
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--primary-color);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.error-message {
+  background: var(--error-color);
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.message-error {
+  background: var(--error-color);
+  color: white;
+}
+
+.message-success {
+  background: var(--success-color);
+  color: white;
+}
+
+.message-info {
+  background: var(--secondary-color);
+  color: white;
+}
