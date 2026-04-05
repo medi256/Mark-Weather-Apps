@@ -30,13 +30,44 @@ const HourlyForecast = () => {
     return { lat: list[0].lat, lon: list[0].lon };
   };
 
+  // const fetchHourly = async ({ lat, lon }) => {
+  //   const key = import.meta.env.VITE_WEATHER_API_KEY;
+  //   // const onecallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=${key}`;
+
+  //   const onecallUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={key}`;
+  //   // const res = await fetch(onecallUrl);
+  //   // if (!res.ok) throw new Error("Hourly forecast fetch failed");
+  //   // const d = await res.json();
+  //   // return d.hourly.slice(0, 24);
+
+  //   const res = await fetch(onecallUrl);
+  //   const data = await res.json();
+
+  //   console.log(data); // 👈 ADD THIS
+
+  //   if (!res.ok)
+  //     throw new Error(data.message || "Hourly forecast fetch failed");
+  // };
+
   const fetchHourly = async ({ lat, lon }) => {
     const key = import.meta.env.VITE_WEATHER_API_KEY;
-    const onecallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=${key}`;
-    const res = await fetch(onecallUrl);
-    if (!res.ok) throw new Error("Hourly forecast fetch failed");
-    const d = await res.json();
-    return d.hourly.slice(0, 24);
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${key}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+
+    if (!res.ok)
+      throw new Error(data.message || "Hourly forecast fetch failed");
+
+    // Slice first 24 hours (8 × 3-hour intervals)
+    return data.list.slice(0, 8).map((item) => ({
+      dt: item.dt,
+      temp: item.main.temp,
+      humidity: item.main.humidity,
+      wind_speed: item.wind.speed,
+      weather: item.weather,
+    }));
   };
 
   const search = async (searchCity = city) => {

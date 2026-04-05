@@ -45,13 +45,51 @@ const WeeklyWeather = () => {
     return { lat: list[0].lat, lon: list[0].lon };
   };
 
+  // const fetchWeekly = async ({ lat, lon }) => {
+  //   const key = import.meta.env.VITE_WEATHER_API_KEY;
+  //   const onecallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${key}`;
+  //   const res = await fetch(onecallUrl);
+  //   if (!res.ok) throw new Error("Weekly forecast fetch failed");
+  //   const d = await res.json();
+  //   return d.daily.slice(0, 7);
+  // };
+
   const fetchWeekly = async ({ lat, lon }) => {
     const key = import.meta.env.VITE_WEATHER_API_KEY;
-    const onecallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${key}`;
-    const res = await fetch(onecallUrl);
-    if (!res.ok) throw new Error("Weekly forecast fetch failed");
-    const d = await res.json();
-    return d.daily.slice(0, 7);
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${key}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log("Weekly forecast raw data:", data);
+
+    if (!res.ok)
+      throw new Error(data.message || "Weekly forecast fetch failed");
+
+    // Extract one forecast per day (around 12:00 local time)
+    const dailyMap = {};
+    data.list.forEach((item) => {
+      const date = item.dt_txt.split(" ")[0]; // YYYY-MM-DD
+      const hour = parseInt(item.dt_txt.split(" ")[1].split(":")[0], 10);
+      // pick forecast closest to midday
+      if (
+        !dailyMap[date] ||
+        Math.abs(hour - 12) < Math.abs(dailyMap[date].hour - 12)
+      ) {
+        dailyMap[date] = { ...item, hour };
+      }
+    });
+
+    // Return the next 7 days
+    return Object.values(dailyMap)
+      .slice(0, 7)
+      .map((item) => ({
+        dt: item.dt,
+        temp: item.main.temp,
+        humidity: item.main.humidity,
+        wind_speed: item.wind.speed,
+        weather: item.weather,
+      }));
   };
 
   const search = async (searchCity = city) => {
